@@ -1,0 +1,5 @@
+/workspace.xml
+*.xml
+*.iml
+.gitignore
+.idea
