@@ -52,7 +52,10 @@
     border: 1px solid #cacaca;
 }
 .recent-searches {
-    #border: 1px solid #000;
+    border: 1px solid #000;
+}
+.recent-searches-item {
+
     cursor: pointer;
     display: block;
 }
@@ -139,7 +142,11 @@
 .load-more {
     text-decoration: none;
     width: 200px;
+    display: block;
     padding: 20px 0;
     color: #fff;
     background: darkorange;
+    margin: 0 auto;
+    text-align: center;
+    cursor: pointer;
 }

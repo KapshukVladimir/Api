@@ -18,6 +18,6 @@ export class RecentSearchesListComponent extends AbstractComponent {
     this.getElement().addEventListener('click', this._recent.bind(this));
   }
   _getTemplate() {
-    return (`<li class="recent-searches">${this._value}</li>`)
+    return (`<li class="recent-searches-item">${this._value}</li>`)
   }
 }

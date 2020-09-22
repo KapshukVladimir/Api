@@ -18,7 +18,7 @@ export class ListComponent extends AbstractComponent {
   createListItem(element) {
     const listItemComponent = new ListItemComponent(element),
       listItemElement = listItemComponent.getElement();
-    renderElement(this.getElement(), listItemElement, insertPosition.BEFORE_END);
+    renderElement(this.getElement(), listItemElement, insertPosition.BEFORE_BEGIN);
 
     return listItemElement;
   }
@@ -33,25 +33,27 @@ export class ListComponent extends AbstractComponent {
         const element = dataArray.filter(el => el.name.toLowerCase().match(data));
 
         if (element.length) {
-          element.forEach((element,index) => {
+          let a = element.slice(0,2);
+          a.forEach((element) => {
             this.createListItem(element);
-              this.createLinkLoadMore();
-
-
             this.getElement().firstChild.scrollIntoView({block: "start", behavior: "smooth"});
           });
+          this.createLinkLoadMore(a);
         }else {
           renderElement(this.getElement(), this.createListErrorItem(), insertPosition.BEFORE_END);
         }
+
+
       });
 
 
   }
-  createLinkLoadMore() {
+  createLinkLoadMore(array) {
+    console.log(array);
     const loadMoreComponent = new LoadMoreComponent();
     const loadMoreElement = loadMoreComponent.getElement();
-    console.log(loadMoreElement)
-    renderElement(this.getElement(), loadMoreElement, insertPosition.BEFORE_END)
+    renderElement(this.getElement(), loadMoreElement, insertPosition.BEFORE_END);
+    loadMoreComponent.addEventListeners();
   }
   addEventListeners() {
     window.addEventListener('update-input', this._dataChange.bind(this));
