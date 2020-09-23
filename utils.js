@@ -1,5 +1,6 @@
 
 export const BODY_ELEMENT = document.querySelector('body');
+
 export const insertPosition = {
   BEFORE_BEGIN: 'beforebegin',
   BEFORE_END: 'beforeend'
@@ -20,4 +21,24 @@ export function createElement(template) {
   element.innerHTML = template;
 
   return element.firstChild;
+}
+
+export function validValue(value, regExp) {
+  return regExp.test(value);
+}
+
+export const regExp = /[a-zа-я0-1]+$/i,
+  ENTER_KEY = 13,
+  MAIN_ELEMENT = document.querySelector('.main');
+
+export function setOutline(element, value) {
+  element.style.outline = value;
+}
+
+export function toggleClass(element, previousClass, className, inner) {
+  if (element.classList.contains(previousClass)) {
+    element.classList.remove(previousClass);
+    element.classList.add(className);
+    element.innerText = inner;
+  }
 }
