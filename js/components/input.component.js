@@ -1,34 +1,32 @@
 import { AbstractComponent } from './abstract.component.js';
 import { ENTER_KEY, insertPosition, regExp, renderElement, setOutline, validValue } from '../../utils.js';
 import { RecentSearchesListComponent } from './recent-searches-list.component.js';
-import { LoadMoreComponent } from './load-more.component.js';
+
 
 export class InputComponent extends AbstractComponent {
   constructor() {
     super();
     window.arrayOfRecent = [];
   }
+
+  createRecentSearches(el) {
+    const recentSearchesListComponent = new RecentSearchesListComponent(el),
+      recentSearchesListElement = recentSearchesListComponent.getElement();
+    renderElement(this.getRecentList(), recentSearchesListElement, insertPosition.BEFORE_END);
+    recentSearchesListComponent.addEventListeners();
+  }
+
   _render(array) {
-    console.log(array);
+
     if (array.length !== 0) {
       const parsedArray = JSON.parse(array);
+
       if (parsedArray.length !== 0) {
         parsedArray.forEach(el => {
-          const recentSearchesListComponent = new RecentSearchesListComponent(el),
-            recentSearchesListElement = recentSearchesListComponent.getElement();
-          renderElement(this.getRecentList(), recentSearchesListElement, insertPosition.BEFORE_END);
-          recentSearchesListComponent.addEventListeners();
+          this.createRecentSearches(el)
         });
       }
     }
-  }
-  _afterCreate() {
-
-    window.arrayOfRecent = [];
-    console.log(window.arrayOfRecent);
-    // if (window.arrayOfRecent.length !== null) {
-    //   this._render(window.arrayOfRecent);
-    // }
   }
 
   getRecentList() {
@@ -37,7 +35,6 @@ export class InputComponent extends AbstractComponent {
   _update(inputValue){
     window.localData.emitEvent('update-input', inputValue)
   }
-  static index = 0;
   _onPressed(e) {
     if (e.keyCode === ENTER_KEY) {
 
@@ -84,9 +81,10 @@ export class InputComponent extends AbstractComponent {
                       <button class="search-btn"><img src="https://www.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-512.png" alt="search"></button>
                   </div>
                   <div class="recent-searches-wrapper">
-                        <div>Recent searches (${InputComponent.index})</div>
+                        <div>Recent searches (0)</div>
                         <ul class="recent-searches"></ul>
                   </div>
             </div>`)
   }
 }
+

@@ -4,17 +4,14 @@ import { renderElement, insertPosition } from '../../utils.js';
 import { ErrorComponent } from './error.component.js';
 import { LoadMoreComponent } from './load-more.component.js';
 
-export class ListComponent extends AbstractComponent {
-  constructor() {
-    super();
-  }
-  _afterCreate() {
 
-  }
+export class ListComponent extends AbstractComponent {
+
   createListErrorItem() {
     const errorComponent = new ErrorComponent();
     return errorComponent.getElement();
   }
+
   createListItem(element) {
     const listItemComponent = new ListItemComponent(element),
       listItemElement = listItemComponent.getElement();
@@ -24,43 +21,43 @@ export class ListComponent extends AbstractComponent {
   }
 
   _render({data}) {
+    const inputValue = data;
     this.getElement().innerHTML = "";
 
     window.localData.fetchUrl()
       .then(res => res.json())
       .then(dataArray => {
 
-        const element = dataArray.filter(el => el.name.toLowerCase().match(data));
+        const element = dataArray.filter(el => el.name.toLowerCase().match(inputValue));
 
         if (element.length) {
-          let a = element.slice(0,2);
-          a.forEach((element) => {
-            this.createListItem(element);
-            this.getElement().firstChild.scrollIntoView({block: "start", behavior: "smooth"});
+          element.forEach((el) => {
+            this.createListItem(el);
+            this.getElement().firstChild.scrollIntoView({block: "start"});
+
           });
-          this.createLinkLoadMore(a);
+          this.createLinkLoadMore(element);
         }else {
           renderElement(this.getElement(), this.createListErrorItem(), insertPosition.BEFORE_END);
         }
-
-
       });
-
-
   }
   createLinkLoadMore(array) {
-    console.log(array);
-    const loadMoreComponent = new LoadMoreComponent();
+    const loadMoreComponent = new LoadMoreComponent(array);
     const loadMoreElement = loadMoreComponent.getElement();
     renderElement(this.getElement(), loadMoreElement, insertPosition.BEFORE_END);
     loadMoreComponent.addEventListeners();
   }
+
   addEventListeners() {
     window.addEventListener('update-input', this._dataChange.bind(this));
+    window.addEventListener('update', this._dataChange.bind(this));
   }
+
   _dataChange(event) {
     this._render(event.detail);
   }
+
   _getTemplate() {
     return (`<ul class="list scroll-to-list"></ul>`)
   }

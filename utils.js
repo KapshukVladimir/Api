@@ -29,15 +29,8 @@ export function validValue(value, regExp) {
 
 export const regExp = /[a-zа-я0-1]+$/i,
   ENTER_KEY = 13,
-  MAIN_ELEMENT = document.querySelector('.main'),
-  ERROR = document.querySelector('.error');
+  MAIN_ELEMENT = document.querySelector('.main');
 
 export function setOutline(element, value) {
   element.style.outline = value;
-}
-export function error() {
-  const element = document.createElement('div');
-  element.classList.add('error');
-  element.innerText = 'There were no properties found for the given location.';
-  MAIN_ELEMENT.append(element);
 }
