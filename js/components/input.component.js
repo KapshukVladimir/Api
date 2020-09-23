@@ -46,6 +46,7 @@ export class InputComponent extends AbstractComponent {
         this._update(inputValue);
 
 
+
         this.getRecentList().innerHTML = '';
 
         localStorage.setItem(`array`, JSON.stringify(window.arrayOfRecent));

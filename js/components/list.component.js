@@ -6,8 +6,9 @@ import { LoadMoreComponent } from './load-more.component.js';
 
 
 export class ListComponent extends AbstractComponent {
-  constructor() {
+  constructor(arrayOfFavorites) {
     super();
+    this._arrayOfFavorites = arrayOfFavorites
   }
 
   createListErrorItem() {
@@ -30,9 +31,13 @@ export class ListComponent extends AbstractComponent {
     renderElement(this.getElement(), loadMoreElement, insertPosition.BEFORE_END);
     loadMoreComponent.addEventListeners();
   }
-
+  //
+  // _afterCreate() {
+  //   this._render(undefined, this._arrayOfFavorites);
+  // }
 
   _render({data}) {
+
     const inputValue = data;
     this.getElement().innerHTML = "";
 

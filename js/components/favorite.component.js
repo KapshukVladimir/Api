@@ -1,22 +1,32 @@
 import { AbstractComponent } from './abstract.component.js';
+import { ModalWindowComponent } from './modal-window.component.js';
+import { BODY_ELEMENT, insertPosition, renderElement } from '../../utils.js';
 
 export class FavoriteComponent extends AbstractComponent {
+  constructor(ArrayOfFavorites) {
+    super();
+    this._ArrayOfFavorites = ArrayOfFavorites;
+  }
 
-  _addToFavorites(e){
+  createModalWindow() {
+    const modalWindowComponent = new ModalWindowComponent(this._ArrayOfFavorites),
+      modalWindowElement = modalWindowComponent.getElement();
+    renderElement(BODY_ELEMENT, modalWindowElement, insertPosition.BEFORE_BEGIN);
+  }
+
+  _showModal(e){
     e.preventDefault();
-    console.log('add');
+    this.createModalWindow();
   }
 
 
   addEventListeners() {
-    this.getElement().addEventListener('click', this._addToFavorites.bind(this));
-    window.addEventListener('update-counter', this._dataChange.bind(this));
+    this.getElement().addEventListener('click', this._showModal.bind(this));
+
   }
 
-  _dataChange(event) {
-    window.counterOfFavorites = event.detail.data;
-    console.log('counter', window.counterOfFavorites);
-  }
+
+
 
   _getTemplate() {
     return (`<button class="favorites-btn">

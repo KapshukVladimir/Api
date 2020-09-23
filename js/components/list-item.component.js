@@ -2,13 +2,16 @@ import { AbstractComponent } from './abstract.component.js';
 import { toggleClass } from '../../utils.js';
 
 export class ListItemComponent extends AbstractComponent {
-  constructor({ image_url, name, description, target_fg}) {
+  constructor(item) {
     super();
-    this._image_url = image_url;
-    this._name = name;
-    this._description = description;
-    this._target_fg = target_fg;
+    this.item = item;
+    this._image_url = item.image_url;
+    this._name = item.name;
+    this._description = item.description;
+    this._target_fg = item.target_fg;
     window.counterOfFavorites = 0;
+    window.arrayOfFavorites = []
+
   }
   getAddBtnFavorite() {
     if (this.getElement().querySelector('.add')) {
@@ -22,6 +25,9 @@ export class ListItemComponent extends AbstractComponent {
       window.counterOfFavorites++;
       localData.emitEvent('update-counter', window.counterOfFavorites);
       toggleClass(this.getAddBtnFavorite(), 'add', 'remove', "Delete");
+
+      window.arrayOfFavorites.push(this.item);
+
     } else {
       toggleClass(this.getAddBtnFavorite(), 'remove', 'add', "Add to favorites");
       window.counterOfFavorites--;
