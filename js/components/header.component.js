@@ -12,10 +12,6 @@ export class HeaderComponent extends AbstractComponent {
                       <div class="logo">
                           API
                       </div>
-                      <div class="header-input">
-                        <input type="text">
-                        <a href="#" class="recent-searches">Recent searches (0)</a>
-                      </div>
                       <div class="favorites">
                         <button class="favorites-btn">
                           Favorites
@@ -23,6 +19,7 @@ export class HeaderComponent extends AbstractComponent {
                       </div>
                     </div>  
                 </div>
-            </header>`)
+            </header>
+            `)
   }
 }
