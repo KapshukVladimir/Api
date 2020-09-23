@@ -129,15 +129,28 @@
     list-style: none;
     text-align: center;
 }
-.add-favorite {
+.add{
     background: darkorange;
-    border: 1px solid darkorange;
+    border: 1px solid orange;
     border-radius: 4px;
     width: 60%;
     padding: 10px 0;
+    color: #fff;
 }
-.add-favorite:hover {
+.remove {
+    background: darkred;
+    border: 1px solid darkred;
+    border-radius: 4px;
+    width: 60%;
+    padding: 10px 0;
+    color: #fff;
+}
+.add:hover {
     background: orange;
+    cursor: pointer;
+}
+.remove:hover {
+    background: red;
     cursor: pointer;
 }
 .load-more {

@@ -8,6 +8,7 @@ import { ArrowUpComponent } from './components/arrow-up.component.js';
 export class appComponent {
   constructor() {
     window.localData = new LocalData();
+    window.counterOfFavorites = 0;
   }
 
   init() {
@@ -15,6 +16,7 @@ export class appComponent {
     const headerComponent = new HeaderComponent(),
           headerElement = headerComponent.getElement();
     renderElement(BODY_ELEMENT, headerElement, insertPosition.BEFORE_BEGIN);
+    headerComponent.addEventListeners();
 
 
     const inputComponent = new InputComponent(),

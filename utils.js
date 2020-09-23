@@ -34,3 +34,11 @@ export const regExp = /[a-zа-я0-1]+$/i,
 export function setOutline(element, value) {
   element.style.outline = value;
 }
+
+export function toggleClass(element, previousClass, className, inner) {
+  if (element.classList.contains(previousClass)) {
+    element.classList.remove(previousClass);
+    element.classList.add(className);
+    element.innerText = inner;
+  }
+}

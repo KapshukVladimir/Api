@@ -6,6 +6,9 @@ import { LoadMoreComponent } from './load-more.component.js';
 
 
 export class ListComponent extends AbstractComponent {
+  constructor() {
+    super();
+  }
 
   createListErrorItem() {
     const errorComponent = new ErrorComponent();
@@ -16,9 +19,18 @@ export class ListComponent extends AbstractComponent {
     const listItemComponent = new ListItemComponent(element),
       listItemElement = listItemComponent.getElement();
     renderElement(this.getElement(), listItemElement, insertPosition.BEFORE_BEGIN);
+    listItemComponent.addEventListeners();
 
     return listItemElement;
   }
+
+  createLinkLoadMore(array) {
+    const loadMoreComponent = new LoadMoreComponent(array);
+    const loadMoreElement = loadMoreComponent.getElement();
+    renderElement(this.getElement(), loadMoreElement, insertPosition.BEFORE_END);
+    loadMoreComponent.addEventListeners();
+  }
+
 
   _render({data}) {
     const inputValue = data;
@@ -41,12 +53,6 @@ export class ListComponent extends AbstractComponent {
           renderElement(this.getElement(), this.createListErrorItem(), insertPosition.BEFORE_END);
         }
       });
-  }
-  createLinkLoadMore(array) {
-    const loadMoreComponent = new LoadMoreComponent(array);
-    const loadMoreElement = loadMoreComponent.getElement();
-    renderElement(this.getElement(), loadMoreElement, insertPosition.BEFORE_END);
-    loadMoreComponent.addEventListeners();
   }
 
   addEventListeners() {
