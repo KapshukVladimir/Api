@@ -36,9 +36,8 @@ export function setOutline(element, value) {
 }
 
 export function toggleClass(element, previousClass, className, inner) {
-  if (element.classList.contains(previousClass)) {
     element.classList.remove(previousClass);
     element.classList.add(className);
     element.innerText = inner;
-  }
 }
+

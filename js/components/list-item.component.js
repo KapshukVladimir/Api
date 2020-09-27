@@ -1,5 +1,7 @@
 import { AbstractComponent } from './abstract.component.js';
 import { toggleClass } from '../../utils.js';
+import {insertPosition, renderElement} from "../../utils.js";
+import {AddToFavoriteComponent} from "./add-to-favorite.component.js";
 
 export class ListItemComponent extends AbstractComponent {
   constructor(item) {
@@ -9,39 +11,29 @@ export class ListItemComponent extends AbstractComponent {
     this._name = item.name;
     this._description = item.description;
     this._target_fg = item.target_fg;
-    window.counterOfFavorites = 0;
-    window.arrayOfFavorites = []
-
-  }
-  getAddBtnFavorite() {
-    if (this.getElement().querySelector('.add')) {
-      return this.getElement().querySelector('.add');
-    }else {
-      return this.getElement().querySelector('.remove');
-    }
-  }
-  changeFavorite() {
-    if (this.getAddBtnFavorite().classList.contains('add')) {
-      window.counterOfFavorites++;
-      localData.emitEvent('update-counter', window.counterOfFavorites);
-      toggleClass(this.getAddBtnFavorite(), 'add', 'remove', "Delete");
-
-      window.arrayOfFavorites.push(this.item);
-
-    } else {
-      toggleClass(this.getAddBtnFavorite(), 'remove', 'add', "Add to favorites");
-      window.counterOfFavorites--;
-      localData.emitEvent('update-counter', window.counterOfFavorites);
-    }
   }
 
-  _addToFavorites(e){
-    e.preventDefault();
-    this.changeFavorite.call(this);
-  }
 
   addEventListeners() {
-    this.getAddBtnFavorite().addEventListener('click', this._addToFavorites.bind(this));
+    window.addEventListener('update-btn', this._btnOnChange.bind(this));
+  }
+
+  _afterCreate() {
+    this._render();
+  }
+  _render() {
+    const buttonComponent = new AddToFavoriteComponent(this.item);
+    const buttonElement = buttonComponent.getElement();
+    renderElement(this._getText(),buttonElement, insertPosition.BEFORE_END);
+    buttonComponent.addEventListeners();
+  }
+
+  _btnOnChange(e) {
+    console.log('io',e.detail.data);
+  }
+
+  _getText() {
+    return this.getElement().querySelector('.text');
   }
   _getTemplate() {
     return (`<li class="list-item">
@@ -53,7 +45,7 @@ export class ListItemComponent extends AbstractComponent {
                         <h3>${this._name}</h3>
                         <h4>${this._description}</h4>
                         <h3>Price: ${this._target_fg}&#8372;</h3>
-                        <button class="add-favorite add">Add to favorites</button>
+                         
                     </div>
                 </div>
             </li>`);

@@ -14,19 +14,23 @@ export class HeaderComponent extends AbstractComponent {
   getFavoritesWrapper() {
     return this.getElement().querySelector('.favorites-wrapper');
   }
+
   createFavoriteBtn() {
-    const favoriteComponent = new FavoriteComponent(),
+    const favoriteComponent = new FavoriteComponent(window.arrayOfFavorites),
       favoriteElement = favoriteComponent.getElement();
     renderElement(this.getFavoritesWrapper(), favoriteElement, insertPosition.BEFORE_END);
     favoriteComponent.addEventListeners();
   }
+
   addEventListeners() {
-    window.addEventListener('update-counter', this._render.bind(this));
+    window.addEventListener('update-favorites', this._render.bind(this));
   }
+
   _render() {
     this.getFavoritesWrapper().innerHTML = "";
     this.createFavoriteBtn();
   }
+
   _getTemplate() {
     return (`<header class="header">
                 <div class="container">

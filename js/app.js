@@ -9,25 +9,20 @@ export class appComponent {
   constructor() {
     window.localData = new LocalData();
     window.counterOfFavorites = 0;
+    window.state = 'add';
+    window.arrayOfFavorites = [];
   }
 
   init() {
-
     const headerComponent = new HeaderComponent(),
           headerElement = headerComponent.getElement();
     renderElement(BODY_ELEMENT, headerElement, insertPosition.BEFORE_BEGIN);
     headerComponent.addEventListeners();
 
-
     const inputComponent = new InputComponent(),
       inputElement = inputComponent.getElement();
-    renderElement(MAIN_ELEMENT, inputElement, insertPosition.BEFORE_BEGIN);
+    renderElement(MAIN_ELEMENT.firstChild.nextSibling, inputElement, insertPosition.BEFORE_BEGIN);
     inputComponent.addEventListeners();
-
-    const listComponent = new ListComponent(),
-      listElement = listComponent.getElement();
-    renderElement(MAIN_ELEMENT, listElement, insertPosition.BEFORE_END);
-    listComponent.addEventListeners();
 
     const arrowUpComponent = new ArrowUpComponent(),
       arrowUpElement = arrowUpComponent.getElement();

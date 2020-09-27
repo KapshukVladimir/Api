@@ -80,6 +80,7 @@
     margin-bottom: 40px;
     font-family: Cambria, sans-serif;
     padding: 20px;
+    border-bottom: 1px solid orange;
 }
 
 .main {
@@ -138,8 +139,8 @@
     color: #fff;
 }
 .remove {
-    background: darkred;
-    border: 1px solid darkred;
+    background: red;
+    border: 1px solid red;
     border-radius: 4px;
     width: 60%;
     padding: 10px 0;
@@ -150,7 +151,7 @@
     cursor: pointer;
 }
 .remove:hover {
-    background: red;
+    background: darkred;
     cursor: pointer;
 }
 .load-more {
@@ -183,21 +184,21 @@
 .overlay {
     background: rgba(0, 0, 0, .6);
     width: 100%;
-    overflow: hidden;
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 5;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 .modal-wrapper {
-    width: 400px;
-    height: 300px;
+    width: 50%;
     background: #fff;
-    z-index: 10;
+    z-index: 20;
+}
+.favorites-btn:disabled {
+    background: #cacaca;
 }
