@@ -1,7 +1,7 @@
 import { AbstractComponent } from './abstract.component.js';
 import { toggleClass } from '../../utils.js';
-import {insertPosition, renderElement} from "../../utils.js";
-import {AddToFavoriteComponent} from "./add-to-favorite.component.js";
+import { insertPosition, renderElement } from '../../utils.js';
+import { AddToFavoriteComponent } from './add-to-favorite.component.js';
 
 export class ListItemComponent extends AbstractComponent {
   constructor(item) {
@@ -45,7 +45,6 @@ export class ListItemComponent extends AbstractComponent {
                         <h3>${this._name}</h3>
                         <h4>${this._description}</h4>
                         <h3>Price: ${this._target_fg}&#8372;</h3>
-                         
                     </div>
                 </div>
             </li>`);

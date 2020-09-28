@@ -38,8 +38,12 @@ export class InputComponent extends AbstractComponent {
   getRecentList() {
     return this.getElement().querySelector('.recent-searches');
   }
-  _update(inputValue){
-    window.localData.emitEvent('update-input', inputValue)
+
+  createList() {
+    const listComponent = new ListComponent(window.arrayFromUrl),
+      listElement = listComponent.getElement();
+    renderElement(MAIN_ELEMENT.lastChild.previousSibling, listElement, insertPosition.BEFORE_END);
+    listComponent.addEventListeners();
   }
   _onPressed(e) {
     if (e.keyCode === ENTER_KEY) {
@@ -60,14 +64,12 @@ export class InputComponent extends AbstractComponent {
               el.btnState = true;
             });
             window.arrayFromUrl = dataArray;
-            console.log(dataArray)
-            console.log(window.arrayFromUrl)
           })
           .then(() => this.createList())
           .then(() => this.createLinkLoadMore());
 
         this.getRecentList().innerHTML = '';
-
+        window.localData.update();
         localStorage.setItem(`array`, JSON.stringify(window.arrayOfRecent));
         const item = localStorage.getItem('array');
         this._render(item);
@@ -86,12 +88,6 @@ export class InputComponent extends AbstractComponent {
     loadMoreComponent.addEventListeners();
   }
 
-  createList() {
-    const listComponent = new ListComponent(window.arrayFromUrl),
-      listElement = listComponent.getElement();
-    renderElement(MAIN_ELEMENT.lastChild.previousSibling, listElement, insertPosition.BEFORE_END);
-    listComponent.addEventListeners();
-  }
   addEventListeners() {
     this.getInput().addEventListener('keypress', this._onPressed.bind(this));
     this.getSearchBtn().addEventListener('click', this._onPressed.bind(this));

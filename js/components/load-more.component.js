@@ -6,7 +6,7 @@ export class LoadMoreComponent extends AbstractComponent {
   constructor(array) {
     super();
     this._array = array;
-    this._error = this.createListErrorItem();
+    this.incoming = window.incomingArray;
   }
 
   createListErrorItem() {
@@ -19,21 +19,24 @@ export class LoadMoreComponent extends AbstractComponent {
     await window.localData.fetchUrl()
       .then(res => res.json())
       .then(array => {
-        array.forEach(el => {
+        window.secondFetchArray = array;
+        window.secondFetchArray.forEach(el => {
           el.btnState = true;
-        })
-        window.arrayFromUrl = [...array]; // потом добавить  ...window.arrayOfFavorites
-        if (window.arrayFromUrl.length === window.localData.requestSettings.per_page) {
-          renderElement(this.getList(), this._error, insertPosition.BEFORE_END);
+        });
+
+        if (window.arrayFromUrl.length !== array.length) {
+          renderElement(this.getSectionLoadMore(), this.createListErrorItem(), insertPosition.BEFORE_END);
           this.getElement().setAttribute('disabled', 'true');
           window.localData.updateError(window.arrayFromUrl);
+        }else {
+          window.incomingArray = [...window.secondFetchArray, ...window.incomingArray]; // потом добавить ...window.arrayOfFavorites
         }
-      }).then(() => window.localData.loadMore(window.arrayFromUrl))
+      }).then(() => window.localData.loadMore(window.incomingArray))
 
   }
 
-  getList () {
-    return document.querySelector('.list');
+  getSectionLoadMore () {
+    return document.querySelector('.section-load-more');
   }
 
   addEventListeners() {

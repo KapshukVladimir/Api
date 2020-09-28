@@ -37,22 +37,13 @@ export class ListComponent extends AbstractComponent {
     this.getElement().innerHTML = "";
     console.log("incoming: ", incomingArray);
 
-      if (incomingArray !== undefined || incomingArray.length) {
+      if (incomingArray && incomingArray.length !== 0) {
         incomingArray.forEach((el) => {
-
-
           this.createListItem(el);
 
-          // this.getElement().firstChild.scrollIntoView({block: "start"});
         });
-
-        // if (window.localData.requestSettings.per_page !== incomingArray.length) {
-        //   this.getElement().lastChild.scrollIntoView({block: "start"});
-        //   renderElement(this.getElement(), this.createListErrorItem(), insertPosition.BEFORE_END);
-        // }
-      } else {
-          // this.getElement().lastChild.scrollIntoView({block: "start"});
-          renderElement(this.getElement(), this.createListErrorItem(), insertPosition.BEFORE_END);
+      }else {
+        renderElement(this.getElement(), this.createListErrorItem(), insertPosition.BEFORE_END);
       }
   }
 
