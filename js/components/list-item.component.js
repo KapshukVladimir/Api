@@ -13,8 +13,8 @@ export class ListItemComponent extends AbstractComponent {
     this._target_fg = item.target_fg;
   }
   createModalWindow(item) {
-    const array = [];
-    array.push(item);
+    let array = [];
+    array = [...array, item];
     const modalWindowComponent = new ModalWindowComponent(array),
       modalWindowElement = modalWindowComponent.getElement();
     renderElement(BODY_ELEMENT, modalWindowElement, insertPosition.BEFORE_BEGIN);

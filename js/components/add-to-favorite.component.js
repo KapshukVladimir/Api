@@ -1,15 +1,15 @@
 import { AbstractComponent } from './abstract.component.js';
 
 export class AddToFavoriteComponent extends AbstractComponent {
-constructor(item) {
-  super();
-  this._item = item;
-}
+  constructor(item) {
+    super();
+    this._item = item;
+  }
 
   _addToFavorites(){
     this._item.btnState = !this._item.btnState;
     window.secondFetchArray = window.arrayFromUrl;
-    window.arrayOfFavorites.push(this._item);
+    window.arrayOfFavorites = [window.arrayOfFavorites, this._item];
     localStorage.setItem('arrayOfFavorites', JSON.stringify(window.arrayOfFavorites));
 
     window.localData.updateFavorites(window.arrayOfFavorites);
