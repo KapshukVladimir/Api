@@ -3,11 +3,6 @@ import { ErrorComponent } from './error.component.js';
 import { insertPosition, renderElement } from '../../utils.js';
 
 export class LoadMoreComponent extends AbstractComponent {
-  constructor(array) {
-    super();
-    this._array = array;
-    this.incoming = window.incomingArray;
-  }
 
   createListErrorItem() {
     const errorComponent = new ErrorComponent();
@@ -15,7 +10,9 @@ export class LoadMoreComponent extends AbstractComponent {
   }
 
   async _loadMore() {
+
     await window.localData.setNewPage();
+
     await window.localData.fetchUrl()
       .then(res => res.json())
       .then(array => {
@@ -31,6 +28,7 @@ export class LoadMoreComponent extends AbstractComponent {
         }else {
           window.incomingArray = [...window.secondFetchArray, ...window.incomingArray]; // потом добавить ...window.arrayOfFavorites
         }
+
       }).then(() => window.localData.loadMore(window.incomingArray))
 
   }

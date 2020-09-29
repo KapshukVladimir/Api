@@ -1,8 +1,7 @@
 import { AbstractComponent } from './abstract.component.js';
 import { ListItemComponent } from './list-item.component.js';
-import { renderElement, insertPosition, MAIN_ELEMENT } from '../../utils.js';
+import { renderElement, insertPosition } from '../../utils.js';
 import { ErrorComponent } from './error.component.js';
-import { LoadMoreComponent } from './load-more.component.js';
 
 export class ListComponent extends AbstractComponent {
   constructor(incomingArray) {
@@ -17,7 +16,6 @@ export class ListComponent extends AbstractComponent {
   }
 
   createListItem(element) {
-
     const listItemComponent = new ListItemComponent(element),
       listItemElement = listItemComponent.getElement();
     renderElement(this.getElement(), listItemElement, insertPosition.BEFORE_BEGIN);
@@ -26,16 +24,12 @@ export class ListComponent extends AbstractComponent {
     return listItemElement;
   }
 
-
   _afterCreate() {
     this._render(this._array);
   }
-  getBtn(){
-    return this.getElement().querySelector('.add-favorite');
-  }
+
   _render(incomingArray) {
     this.getElement().innerHTML = "";
-    console.log("incoming: ", incomingArray);
 
       if (incomingArray && incomingArray.length !== 0) {
         incomingArray.forEach((el) => {

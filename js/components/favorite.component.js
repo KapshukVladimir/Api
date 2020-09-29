@@ -1,6 +1,6 @@
 import { AbstractComponent } from './abstract.component.js';
 import { ModalWindowComponent } from './modal-window.component.js';
-import { BODY_ELEMENT, insertPosition, renderElement } from '../../utils.js';
+import { HIDDEN, BODY_ELEMENT, insertPosition, renderElement } from '../../utils.js';
 
 export class FavoriteComponent extends AbstractComponent {
   constructor(ArrayOfFavorites) {
@@ -18,18 +18,17 @@ export class FavoriteComponent extends AbstractComponent {
     return document.querySelector('.overlay');
   }
   _showModal(e){
-    console.log('FAVORITES',this._ArrayOfFavorites);
-      e.preventDefault();
-    BODY_ELEMENT.style.overflowY = "hidden";
-  //
+    e.preventDefault();
+    BODY_ELEMENT.style.overflowY = HIDDEN;
+
     if (this.getOverlay()) {
      this.getOverlay().remove();
     }
     this.createModalWindow();
-
   }
 
   _afterCreate() {
+
     if (!this._ArrayOfFavorites.length) {
       this.getElement().setAttribute('disabled', 'true');
     }

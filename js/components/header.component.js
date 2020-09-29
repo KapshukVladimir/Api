@@ -8,6 +8,11 @@ export class HeaderComponent extends AbstractComponent {
   }
 
   _afterCreate() {
+    if (localStorage.getItem('arrayOfFavorites')) {
+      window.arrayOfFavorites = JSON.parse(localStorage.getItem('arrayOfFavorites'));
+    }else {
+      window.arrayOfFavorites = [];
+    }
     this._render();
   }
 

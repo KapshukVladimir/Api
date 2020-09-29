@@ -3,12 +3,12 @@ import { ListItemComponent } from './list-item.component.js';
 import { insertPosition, renderElement } from '../../utils.js';
 
 export class ListFavoritesComponent extends AbstractComponent {
-
-  constructor() {
+  constructor(array) {
     super();
+    this.array = array
   }
-  createListItem(element) {
 
+  createListItem(element) {
     const listItemComponent = new ListItemComponent(element),
       listItemElement = listItemComponent.getElement();
     renderElement(this.getElement(), listItemElement, insertPosition.BEFORE_BEGIN);
@@ -16,13 +16,26 @@ export class ListFavoritesComponent extends AbstractComponent {
 
     return listItemElement;
   }
+
+  renderSingleItem(array) {
+    array.forEach(el => {
+      this.createListItem(el);
+    });
+  }
+
   _render() {
     window.arrayOfFavorites.forEach(el => {
       this.createListItem(el);
     })
   }
+
   _afterCreate() {
-    this._render();
+
+    if (this.array.length !== 0) {
+      this.renderSingleItem(this.array);
+    }else {
+      this._render();
+    }
   }
 
   _getTemplate() {
