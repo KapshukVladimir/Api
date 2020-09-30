@@ -8,6 +8,7 @@ export class HeaderComponent extends AbstractComponent {
   }
 
   _afterCreate() {
+
     if (localStorage.getItem('arrayOfFavorites')) {
       window.arrayOfFavorites = JSON.parse(localStorage.getItem('arrayOfFavorites'));
     }else {
@@ -23,6 +24,7 @@ export class HeaderComponent extends AbstractComponent {
   createFavoriteBtn() {
     const favoriteComponent = new FavoriteComponent(window.arrayOfFavorites),
       favoriteElement = favoriteComponent.getElement();
+
     renderElement(this.getFavoritesWrapper(), favoriteElement, insertPosition.BEFORE_END);
     favoriteComponent.addEventListeners();
   }

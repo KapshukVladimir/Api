@@ -11,6 +11,7 @@ export class ListFavoritesComponent extends AbstractComponent {
   createListItem(element) {
     const listItemComponent = new ListItemComponent(element),
       listItemElement = listItemComponent.getElement();
+
     renderElement(this.getElement(), listItemElement, insertPosition.BEFORE_BEGIN);
     listItemComponent.addEventListeners();
 
@@ -31,7 +32,7 @@ export class ListFavoritesComponent extends AbstractComponent {
 
   _afterCreate() {
 
-    if (this.array.length !== 0) {
+    if (this.array.length) {
       this.renderSingleItem(this.array);
     }else {
       this._render();

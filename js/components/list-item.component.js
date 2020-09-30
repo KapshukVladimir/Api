@@ -12,11 +12,14 @@ export class ListItemComponent extends AbstractComponent {
     this._description = item.description;
     this._target_fg = item.target_fg;
   }
+
   createModalWindow(item) {
     let array = [];
     array = [...array, item];
+
     const modalWindowComponent = new ModalWindowComponent(array),
       modalWindowElement = modalWindowComponent.getElement();
+
     renderElement(BODY_ELEMENT, modalWindowElement, insertPosition.BEFORE_BEGIN);
     modalWindowComponent.addEventListeners();
 
@@ -24,14 +27,17 @@ export class ListItemComponent extends AbstractComponent {
   }
 
   _showItem() {
+
     if (this.getModal()) {
       this.getModal().remove();
     }
     this.createModalWindow(this.item);
   }
+
   getModal() {
     return document.querySelector('.overlay');
   }
+
   addEventListeners() {
     this.getTitle().addEventListener('click', this._showItem.bind(this));
   }
@@ -41,12 +47,15 @@ export class ListItemComponent extends AbstractComponent {
   }
 
   _render() {
-    const buttonComponent = new AddToFavoriteComponent(this.item);
-    const buttonElement = buttonComponent.getElement();
+   this.createButton()
+  }
+  createButton() {
+    const buttonComponent = new AddToFavoriteComponent(this.item),
+      buttonElement = buttonComponent.getElement();
+
     renderElement(this._getText(),buttonElement, insertPosition.BEFORE_END);
     buttonComponent.addEventListeners();
   }
-
   getTitle() {
     return this._getText().querySelector('.title');
   }

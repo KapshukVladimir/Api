@@ -1,8 +1,9 @@
 import { AbstractComponent } from './abstract.component.js';
-import { MAIN_ELEMENT, ENTER_KEY, insertPosition, regExp, renderElement, setOutline, validValue } from '../../utils.js';
+import { MAIN_ELEMENT, ENTER_KEY, insertPosition, regExp, isEmpty, renderElement, setOutline, validValue } from '../../utils.js';
 import { RecentSearchesListComponent } from './recent-searches-list.component.js';
 import { ListComponent } from './list.component.js';
 import { LoadMoreComponent } from './load-more.component.js';
+
 
 
 export class InputComponent extends AbstractComponent {
@@ -10,6 +11,7 @@ export class InputComponent extends AbstractComponent {
   createRecentSearches(el) {
     const recentSearchesListComponent = new RecentSearchesListComponent(el),
       recentSearchesListElement = recentSearchesListComponent.getElement();
+
     renderElement(this.getRecentList(), recentSearchesListElement, insertPosition.BEFORE_END);
     recentSearchesListComponent.addEventListeners();
   }
@@ -25,7 +27,7 @@ export class InputComponent extends AbstractComponent {
 
   _render(array) {
 
-    if (array !== undefined && array !== null) {
+    if (isEmpty(array)) {
         array.forEach(el => {
           this.createRecentSearches(el)
         });
@@ -43,14 +45,15 @@ export class InputComponent extends AbstractComponent {
   createList() {
     const listComponent = new ListComponent(window.arrayFromUrl),
       listElement = listComponent.getElement();
+
     renderElement(MAIN_ELEMENT.lastChild.previousSibling, listElement, insertPosition.BEFORE_END);
     listComponent.addEventListeners();
   }
 
   _fetchData(inputValue) {
+    const theInput = this.getInput();
     if (validValue(inputValue, regExp)) {
-      setOutline(this.getInput(), 'none');
-
+      setOutline(theInput, 'none');
       window.arrayOfRecent = [...window.arrayOfRecent, inputValue];
       localStorage.setItem('arrayOfRecent', JSON.stringify(window.arrayOfRecent));
 
@@ -64,22 +67,24 @@ export class InputComponent extends AbstractComponent {
           });
           window.arrayFromUrl = dataArray;
         })
-        .then(() => this.createList())
-        .then(() => this.createLinkLoadMore())
-        .then(() => this._render(window.arrayOfRecent));
+        .then(() => {
+          this.createList();
+          this.createLinkLoadMore();
+          this._render(window.arrayOfRecent)
+        });
 
       this.getRecentList().innerHTML = '';
       window.localData.update();
-
-      this.getInput().value = '';
+      theInput.value = '';
     }else {
-      setOutline(this.getInput(), '1px solid red');
-      this.getInput().value = '';
+      setOutline(theInput, '1px solid red');
+      theInput.value = '';
     }
   }
 
   _click() {
     const inputValue =  this.getInput().value;
+
     this._fetchData(inputValue)
   }
 
@@ -88,13 +93,15 @@ export class InputComponent extends AbstractComponent {
     if (e.keyCode === ENTER_KEY || e.type === 'click' ) {
       MAIN_ELEMENT.lastChild.previousSibling.innerHTML = "";
       const inputValue = e.target.value.trim().toLowerCase();
+
       this._fetchData(inputValue)
     }
   }
 
   createLinkLoadMore() {
-    const loadMoreComponent = new LoadMoreComponent();
-    const loadMoreElement = loadMoreComponent.getElement();
+    const loadMoreComponent = new LoadMoreComponent(),
+      loadMoreElement = loadMoreComponent.getElement();
+
     renderElement(MAIN_ELEMENT.lastChild.previousSibling, loadMoreElement, insertPosition.BEFORE_END);
     loadMoreComponent.addEventListeners();
   }

@@ -15,9 +15,14 @@ export function renderElement(container, element, position) {
 
 export function createElement(template) {
   const element = document.createElement('div');
-  element.innerHTML = template;
 
+  element.innerHTML = template;
   return element.firstChild;
+}
+
+export function isEmpty(array) {
+  if (array !== undefined && array !== null)
+    return true;
 }
 
 export function validValue(value, regExp) {
@@ -35,4 +40,16 @@ export const regExp = /[a-zа-я0-1]+$/i,
 
 export function setOutline(element, value) {
   element.style.outline = value;
+}
+
+export function addToFavorites(element) {
+  element.classList.remove('remove');
+  element.classList.add('add');
+  element.innerText = 'Add to Favorites';
+}
+
+export function removeFromFavorites(element) {
+  element.classList.remove('remove');
+  element.classList.add('remove');
+  element.innerText = 'Remove';
 }

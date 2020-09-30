@@ -12,6 +12,7 @@ export class ModalWindowComponent extends AbstractComponent {
     this.getElement().firstChild.nextSibling.innerHTML = '';
     const listFavoritesComponent = new ListFavoritesComponent(this._arrayOfFavorites),
       listFavoritesElement = listFavoritesComponent.getElement();
+
     renderElement(this.getElement().firstChild.nextSibling, listFavoritesElement, insertPosition.BEFORE_BEGIN);
   }
 
@@ -31,8 +32,10 @@ export class ModalWindowComponent extends AbstractComponent {
 
   addEventListeners() {
     document.addEventListener('keydown', (e) => {
+
       if (e.keyCode === ESC_KEY) {
         this.getElement().style.display = NONE;
+        BODY_ELEMENT.style.overflowY = SCROLL;
       }
     });
     this.getElement().addEventListener('click', this._closeModal.bind(this));

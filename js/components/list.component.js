@@ -12,12 +12,14 @@ export class ListComponent extends AbstractComponent {
 
   createListErrorItem() {
     const errorComponent = new ErrorComponent();
+
     return errorComponent.getElement();
   }
 
   createListItem(element) {
     const listItemComponent = new ListItemComponent(element),
       listItemElement = listItemComponent.getElement();
+
     renderElement(this.getElement(), listItemElement, insertPosition.BEFORE_BEGIN);
     listItemComponent.addEventListeners();
 
@@ -52,7 +54,8 @@ export class ListComponent extends AbstractComponent {
   }
 
   _dataChange(event) {
-    if (event.detail.data !== undefined){
+
+    if (event.detail.data){
       this._render(event.detail.data);
     }else {
       this._render(this._array);

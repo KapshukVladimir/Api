@@ -1,4 +1,5 @@
 import { AbstractComponent } from './abstract.component.js';
+import {  addToFavorites, removeFromFavorites } from '../../utils.js';
 
 export class AddToFavoriteComponent extends AbstractComponent {
   constructor(item) {
@@ -9,7 +10,7 @@ export class AddToFavoriteComponent extends AbstractComponent {
   _addToFavorites(){
     this._item.btnState = !this._item.btnState;
     window.secondFetchArray = window.arrayFromUrl;
-    window.arrayOfFavorites = [window.arrayOfFavorites, this._item];
+    window.arrayOfFavorites = [...window.arrayOfFavorites, this._item];
     localStorage.setItem('arrayOfFavorites', JSON.stringify(window.arrayOfFavorites));
 
     window.localData.updateFavorites(window.arrayOfFavorites);
@@ -26,21 +27,18 @@ export class AddToFavoriteComponent extends AbstractComponent {
   }
 
   addEventListeners() {
+    const addBtn = this.getElement();
 
-   if (this._item.btnState){
-      this.getElement().classList.remove('remove');
-      this.getElement().classList.add('add');
-      this.getElement().innerText = 'Add to Favorites';
-      this.getElement().addEventListener('click', this._addToFavorites.bind(this));
+    if (this._item.btnState){
+      addToFavorites(addBtn);
+      addBtn.addEventListener('click', this._addToFavorites.bind(this));
    }else {
-     this.getElement().classList.remove('add');
-      this.getElement().classList.add('remove');
-      this.getElement().innerText = 'Remove';
-      this.getElement().addEventListener('click', this._removeFromFavorites.bind(this));
+      removeFromFavorites(addBtn);
+      addBtn.addEventListener('click', this._removeFromFavorites.bind(this));
     }
   }
 
   _getTemplate() {
-    return (`<button class="add-favorite ${window.state}">Add to favorites</button>`)
+    return (`<button class="add-favorite">Add to favorites</button>`)
   }
 }

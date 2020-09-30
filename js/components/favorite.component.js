@@ -11,12 +11,15 @@ export class FavoriteComponent extends AbstractComponent {
   createModalWindow() {
     const modalWindowComponent = new ModalWindowComponent(this._ArrayOfFavorites),
       modalWindowElement = modalWindowComponent.getElement();
+
     renderElement(BODY_ELEMENT, modalWindowElement, insertPosition.BEFORE_BEGIN);
     modalWindowComponent.addEventListeners();
   }
+
   getOverlay() {
     return document.querySelector('.overlay');
   }
+
   _showModal(e){
     e.preventDefault();
     BODY_ELEMENT.style.overflowY = HIDDEN;

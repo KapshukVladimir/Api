@@ -6,11 +6,11 @@ export class LoadMoreComponent extends AbstractComponent {
 
   createListErrorItem() {
     const errorComponent = new ErrorComponent();
+
     return errorComponent.getElement();
   }
 
   async _loadMore() {
-
     await window.localData.setNewPage();
 
     await window.localData.fetchUrl()
@@ -26,7 +26,7 @@ export class LoadMoreComponent extends AbstractComponent {
           this.getElement().setAttribute('disabled', 'true');
           window.localData.updateError(window.arrayFromUrl);
         }else {
-          window.incomingArray = [...window.secondFetchArray, ...window.incomingArray]; // потом добавить ...window.arrayOfFavorites
+          window.incomingArray = [...window.secondFetchArray, ...window.incomingArray];
         }
 
       }).then(() => window.localData.loadMore(window.incomingArray))

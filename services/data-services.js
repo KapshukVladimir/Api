@@ -44,7 +44,7 @@ export class LocalData {
   }
 
   async setNewPage() {
-    this.requestSettings.page += 2;
+    this.requestSettings.page++;
   }
 
   async fetchUrl() {

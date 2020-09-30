@@ -12,20 +12,33 @@ export class appComponent {
   }
 
   init() {
+    this.createHeader();
+    this.createInput();
+    this.createArrowUp();
+  }
+
+  createHeader() {
     const headerComponent = new HeaderComponent(),
-          headerElement = headerComponent.getElement();
+      headerElement = headerComponent.getElement();
+
     renderElement(BODY_ELEMENT, headerElement, insertPosition.BEFORE_BEGIN);
     headerComponent.addEventListeners();
+  }
 
+  createInput() {
     const inputComponent = new InputComponent(),
       inputElement = inputComponent.getElement();
+
     renderElement(MAIN_ELEMENT.firstChild.nextSibling, inputElement, insertPosition.BEFORE_BEGIN);
     inputComponent.addEventListeners();
 
+  }
+
+  createArrowUp() {
     const arrowUpComponent = new ArrowUpComponent(),
       arrowUpElement = arrowUpComponent.getElement();
+
     renderElement(BODY_ELEMENT, arrowUpElement, insertPosition.BEFORE_END);
     arrowUpComponent.addEventListeners();
-
   }
 }
